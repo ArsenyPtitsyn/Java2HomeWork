@@ -11,6 +11,7 @@ public class MainWindow extends JFrame {
     private static final int WINDOW_HEIGHT = 450;
 
     Sprite sprites[] = new Sprite[10];
+    Background bg;
 
     private MainWindow() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -53,5 +54,13 @@ public class MainWindow extends JFrame {
         for (int i = 0; i < sprites.length; i++) {
             sprites[i].render(canvas, g);
         }
+    }
+
+    void setBackground(MainCanvas canvas, Graphics g, float deltaTime) {
+        renderBackground(canvas, g);
+    }
+
+    private void renderBackground(MainCanvas canvas, Graphics g) {
+        bg.renderBackground(canvas, g);
     }
 }
