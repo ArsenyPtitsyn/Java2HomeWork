@@ -8,10 +8,10 @@ public class Background extends Color {
         super(r, g, b);
     }
 
-    public void changeBackground(MainCanvas canvas, float deltaTime) {
-        Color color = new Color((int) (10000000000000000L * (Math.random() / deltaTime) % 255),
-                (int) (10000000000000000L * (Math.random() / deltaTime) % 255),
-                (int) (10000000000000000L * (Math.random() / deltaTime) % 255));
+    public void renderBackground(MainCanvas canvas) {
+        Color color = new Color((int) (Math.random() * 255),
+                (int) (Math.random() * 255),
+                (int) (Math.random() * 255));
         canvas.setBackground(color);
     }
 }

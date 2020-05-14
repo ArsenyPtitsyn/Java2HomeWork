@@ -43,7 +43,7 @@ public class MainWindow extends JFrame {
     void onDrawFrame(MainCanvas canvas, Graphics g, float deltaTime) {
         update(canvas, deltaTime);
         render(canvas, g);
-        changeColorOfBackground(canvas, deltaTime);
+        renderBackground(canvas);
     }
 
     private void update(MainCanvas canvas, float deltaTime) {
@@ -58,7 +58,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private void changeColorOfBackground(MainCanvas canvas, float deltaTime) {
-        bg.changeBackground(canvas, deltaTime);
+    private void renderBackground(MainCanvas canvas) {
+        bg.renderBackground(canvas);
     }
 }
