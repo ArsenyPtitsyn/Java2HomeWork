@@ -36,12 +36,14 @@ public class MainWindow extends JFrame {
     private void initApplication() {
         for(int i = 0; i < sprites.length; i++) {
             sprites[i] = new Ball();
+            bg = new Background(255, 255, 255);
         }
     }
 
     void onDrawFrame(MainCanvas canvas, Graphics g, float deltaTime) {
         update(canvas, deltaTime);
         render(canvas, g);
+        changeColorOfBackground(canvas, deltaTime);
     }
 
     private void update(MainCanvas canvas, float deltaTime) {
@@ -56,11 +58,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    void setBackground(MainCanvas canvas, Graphics g, float deltaTime) {
-        renderBackground(canvas, g);
-    }
-
-    private void renderBackground(MainCanvas canvas, Graphics g) {
-        bg.renderBackground(canvas, g);
+    private void changeColorOfBackground(MainCanvas canvas, float deltaTime) {
+        bg.changeBackground(canvas, deltaTime);
     }
 }

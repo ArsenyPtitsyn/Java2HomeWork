@@ -19,7 +19,6 @@ public class MainCanvas extends JPanel {
         long currentTime = System.nanoTime();
         float deltaTime = (currentTime - lastFrameTime) * 0.000000001f;
         gameController.onDrawFrame(this, g, deltaTime);
-        gameController.setBackground(this, g, deltaTime * 100f);
         lastFrameTime = currentTime;
         try {
             Thread.sleep(17);
