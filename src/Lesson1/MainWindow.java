@@ -44,19 +44,18 @@ public class MainWindow extends JFrame {
         update(canvas, deltaTime);
         render(canvas, g);
     }
-    void changeBackground(MainCanvas canvas, float deltaTime) {
-        bg.changeBackground(canvas, deltaTime);
-    }
 
     private void update(MainCanvas canvas, float deltaTime) {
         for (int i = 0; i < sprites.length; i++) {
             sprites[i].update(canvas, deltaTime);
+            bg.updateBackground(canvas, (float) Math.cos(deltaTime));
         }
     }
 
     private void render(MainCanvas canvas, Graphics g) {
         for (int i = 0; i < sprites.length; i++) {
             sprites[i].render(canvas, g);
+            bg.renderBackground(canvas);
         }
     }
 
