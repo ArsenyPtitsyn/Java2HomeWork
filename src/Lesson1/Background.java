@@ -4,13 +4,13 @@ import java.awt.*;
 
 public class Background extends Color {
 
-    public static final int initRed = 255;
-    public static final int initGreen = 255;
-    public static final int initBlue = 255;
+    public static final float initRed = 1f;
+    public static final float initGreen = 1f;
+    public static final float initBlue = 1f;
 
-    private int r;
-    private int g;
-    private int b;
+    private float r;
+    private float g;
+    private float b;
     private Color bg;
 
     private float cyclicFrequencyRed = (float) (0.2f + (Math.random() * 0.5f));
@@ -21,19 +21,18 @@ public class Background extends Color {
     private float phaseGreen;
     private float phaseBlue;
 
-    public Background(int r, int g, int b) {
+    public Background(float r, float g, float b) {
         super(r, g, b);
     }
 
     public void updateBackground(float deltaTime) {
-        float currentTime = System.nanoTime() * 0.000000001f;
-        phaseRed = cyclicFrequencyRed * currentTime;
-        phaseGreen = cyclicFrequencyGreen * currentTime;
-        phaseBlue = cyclicFrequencyBlue * currentTime;
+        phaseRed += cyclicFrequencyRed * deltaTime;
+        phaseGreen += cyclicFrequencyGreen * deltaTime;
+        phaseBlue += cyclicFrequencyBlue * deltaTime;
 
-        r = initRed * (int) (Math.cos(phaseRed) * Math.cos(phaseRed));
-        g = initGreen * (int) (Math.cos(phaseGreen) * Math.cos(phaseGreen));
-        b = initBlue * (int) (Math.cos(phaseBlue) * Math.cos(phaseBlue));
+        r = initRed * (float) (Math.cos(phaseRed) * Math.cos(phaseRed));
+        g = initGreen * (float) (Math.cos(phaseGreen) * Math.cos(phaseGreen));
+        b = initBlue * (float) (Math.cos(phaseBlue) * Math.cos(phaseBlue));
         bg = new Color(r, g, b);
     }
 
