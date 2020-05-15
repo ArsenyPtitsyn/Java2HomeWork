@@ -36,8 +36,8 @@ public class MainWindow extends JFrame {
     private void initApplication() {
         for(int i = 0; i < sprites.length; i++) {
             sprites[i] = new Ball();
-            bg = new Background(255, 255, 255);
         }
+        bg = new Background(Background.initRed, Background.initGreen, Background.initBlue);
     }
 
     void onDrawFrame(MainCanvas canvas, Graphics g, float deltaTime) {
@@ -48,15 +48,15 @@ public class MainWindow extends JFrame {
     private void update(MainCanvas canvas, float deltaTime) {
         for (int i = 0; i < sprites.length; i++) {
             sprites[i].update(canvas, deltaTime);
-            bg.updateBackground(canvas, (float) Math.cos(deltaTime));
         }
+        bg.updateBackground(deltaTime);
     }
 
     private void render(MainCanvas canvas, Graphics g) {
         for (int i = 0; i < sprites.length; i++) {
             sprites[i].render(canvas, g);
-            bg.renderBackground(canvas);
         }
+        bg.renderBackground(canvas);
     }
 
 }
