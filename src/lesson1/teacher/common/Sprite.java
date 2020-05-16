@@ -1,8 +1,6 @@
-package lesson1;
+package lesson1.teacher.common;
 
-import java.awt.*;
-
-public abstract class Sprite {
+public abstract class Sprite implements GameObject {
     protected float x;
     protected float y;
     protected float halfWidth;
@@ -36,10 +34,7 @@ public abstract class Sprite {
         return 2f * halfWidth;
     }
     protected float getHeight() {
-        return 2f *halfHeight;
+        return 2f * halfHeight;
     }
 
-    public void update(MainCanvas canvas, float deltaTime) {}
-
-    public void render(MainCanvas canvas, Graphics g) {}
 }

@@ -1,4 +1,4 @@
-package lesson1;
+package lesson1.mine;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +11,7 @@ public class MainWindow extends JFrame {
     private static final int WINDOW_HEIGHT = 450;
 
     Sprite sprites[] = new Sprite[10];
+    Background bg;
 
     private MainWindow() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -36,6 +37,7 @@ public class MainWindow extends JFrame {
         for(int i = 0; i < sprites.length; i++) {
             sprites[i] = new Ball();
         }
+        bg = new Background(Background.initRed, Background.initGreen, Background.initBlue);
     }
 
     void onDrawFrame(MainCanvas canvas, Graphics g, float deltaTime) {
@@ -47,11 +49,14 @@ public class MainWindow extends JFrame {
         for (int i = 0; i < sprites.length; i++) {
             sprites[i].update(canvas, deltaTime);
         }
+        bg.updateBackground(deltaTime);
     }
 
     private void render(MainCanvas canvas, Graphics g) {
         for (int i = 0; i < sprites.length; i++) {
             sprites[i].render(canvas, g);
         }
+        bg.renderBackground(canvas);
     }
+
 }

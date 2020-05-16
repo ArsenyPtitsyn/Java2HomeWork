@@ -1,17 +1,27 @@
-package lesson1;
+package lesson1.teacher.circles;
+
+import lesson1.teacher.common.MainCanvas;
+import lesson1.teacher.common.Sprite;
 
 import java.awt.*;
 
-public class Ball extends Sprite {
+public class Circle extends Sprite {
+
     Color color = new Color((int) (Math.random() * 255),
             (int) (Math.random() * 255),
             (int) (Math.random() * 255));
     private float vX = (float) (100f + (Math.random() * 200f));
     private float vY = (float) (100f + (Math.random() * 200f));
 
-    Ball() {
-        halfWidth = 20 + (float) (Math.random() * 50f);
-        halfHeight = halfWidth;
+    Circle() {
+        halfHeight = 20 + (float) (Math.random() * 50f);
+        halfWidth = halfHeight;
+    }
+
+    Circle(int x, int y) {
+        this();
+        this.x = x;
+        this.y = y;
     }
 
     @Override
@@ -34,11 +44,13 @@ public class Ball extends Sprite {
             setBottom(canvas.getBottom());
             vY = -vY;
         }
+
     }
 
     @Override
     public void render(MainCanvas canvas, Graphics g) {
         g.setColor(color);
-        g.fillOval((int) getLeft(), (int) getTop(), (int) getWidth(), (int) getHeight());
+        g.fillOval((int) getLeft(), (int) getTop(),
+                (int) getWidth(), (int) getHeight());
     }
 }
