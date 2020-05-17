@@ -11,9 +11,10 @@ public class Homework2 {
             }
             System.out.println();
         }
+        System.out.println(calculateStringArray(resArr));
     }
 
-    // Написать метод, на вход которого подаётся такая строка,
+    // 1. Написать метод, на вход которого подаётся такая строка,
     // метод должен преобразовать строку в двумерный массив типа String[][];
     private static String[][] transformString(String str) {
 
@@ -31,5 +32,21 @@ public class Homework2 {
         }
 
         return resArray;
+    }
+
+    // Преобразовать все элементы массива в числа типа int, просуммировать,
+    // поделить полученную сумму на 2, и вернуть результат;
+    private static float calculateStringArray(String[][] array) {
+
+        int sum = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            int[][] supportIntArr = new int[array.length][array[i].length];
+            for (int j = 0; j < array[i].length; j++) {
+                supportIntArr[i][j] = Integer.parseInt(array[i][j]);
+                sum += supportIntArr[i][j];
+            }
+        }
+        return sum /2;
     }
 }
