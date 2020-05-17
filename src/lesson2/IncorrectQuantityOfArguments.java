@@ -1,9 +1,9 @@
 package lesson2;
 
-public class IncorrectNumberOfArguments extends Exception {
+public class IncorrectQuantityOfArguments extends Exception {
     private String s;
 
-    IncorrectNumberOfArguments(String s) {
+    IncorrectQuantityOfArguments(String s) {
         this.s = s;
     }
 

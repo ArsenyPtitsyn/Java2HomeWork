@@ -3,7 +3,7 @@ package lesson2;
 public class Homework2 {
 
     public static void main(String[] arg) {
-        final String initString= "13 4 6 2\n2 3 2 25\n300 3 1 132\n3 46 13 ";
+        final String initString= "13 4 6 2\n2 3 2 25\n300 3 1 132\n3 46 17";
         try {
             String[][] resArr = transformString(initString);
             for (int i = 0; i < resArr.length; i++) {
@@ -13,9 +13,8 @@ public class Homework2 {
                 System.out.println();
             }
             System.out.println(calculateStringArray(resArr));
-        } catch (IncorrectNumberOfArguments e) {
-            System.out.println(e.getString());
-            e.printStackTrace();
+        } catch (IncorrectQuantityOfArguments e) {
+            throw new RuntimeException(e);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -23,7 +22,7 @@ public class Homework2 {
 
     // 1. Написать метод, на вход которого подаётся такая строка,
     // метод должен преобразовать строку в двумерный массив типа String[][];
-    private static String[][] transformString(String str) throws IncorrectNumberOfArguments {
+    private static String[][] transformString(String str) throws IncorrectQuantityOfArguments {
 
         String[][] resArray = new String[4][4];
 
@@ -32,12 +31,12 @@ public class Homework2 {
 
         String[] arrayStr1 = str.split(separator1);
         if (arrayStr1.length != 4)
-            throw new IncorrectNumberOfArguments("Invalid number of rows!");
+            throw new IncorrectQuantityOfArguments("Invalid number of rows!");
         else {
             for (int i = 0; i < arrayStr1.length; i++) {
                 String[] arrayStr2 = arrayStr1[i].split(separator2);
                 if (arrayStr2.length != 4)
-                    throw new IncorrectNumberOfArguments("Invalid number of columns!");
+                    throw new IncorrectQuantityOfArguments("Invalid number of columns!");
                 else {
                     for (int j = 0; j < arrayStr2.length; j++) {
                         resArray[i][j] = arrayStr2[j];
