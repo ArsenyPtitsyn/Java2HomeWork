@@ -3,40 +3,55 @@ package lesson2;
 public class Homework2 {
 
     public static void main(String[] arg) {
-        final String initString= "10 3 1 2\n2 3 2 2\n5 6 7 1\n300 3 1 0";
-        String[][] resArr = transformString(initString);
-        for (int i = 0; i < resArr.length; i++) {
-            for (int j = 0; j < resArr[i].length; j++) {
-                System.out.print(resArr[i][j] + " ");
+        final String initString= "13 4 6 2\n2 3 2 25\n300 3 1 132\n3 46 13 ";
+        try {
+            String[][] resArr = transformString(initString);
+            for (int i = 0; i < resArr.length; i++) {
+                for (int j = 0; j < resArr[i].length; j++) {
+                    System.out.print(resArr[i][j] + " ");
+                }
+                System.out.println();
             }
-            System.out.println();
+            System.out.println(calculateStringArray(resArr));
+        } catch (IncorrectNumberOfArguments e) {
+            System.out.println(e.getString());
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
-        System.out.println(calculateStringArray(resArr));
     }
 
     // 1. Написать метод, на вход которого подаётся такая строка,
     // метод должен преобразовать строку в двумерный массив типа String[][];
-    private static String[][] transformString(String str) {
+    private static String[][] transformString(String str) throws IncorrectNumberOfArguments {
 
         String[][] resArray = new String[4][4];
 
-        String separrtor1 = "\n";
-        String separrtor2 = " ";
+        String separator1 = "\n";
+        String separator2 = " ";
 
-        String[] arrayStr1 = str.split(separrtor1);
-        for (int i = 0; i < arrayStr1.length; i++) {
-            String[] arrayStr2 = arrayStr1[i].split(separrtor2);
-            for (int j = 0; j < arrayStr2.length; j++) {
-                resArray[i][j] = arrayStr2[j];
+        String[] arrayStr1 = str.split(separator1);
+        if (arrayStr1.length != 4)
+            throw new IncorrectNumberOfArguments("Invalid number of rows!");
+        else {
+            for (int i = 0; i < arrayStr1.length; i++) {
+                String[] arrayStr2 = arrayStr1[i].split(separator2);
+                if (arrayStr2.length != 4)
+                    throw new IncorrectNumberOfArguments("Invalid number of columns!");
+                else {
+                    for (int j = 0; j < arrayStr2.length; j++) {
+                        resArray[i][j] = arrayStr2[j];
+                    }
+                }
             }
         }
 
         return resArray;
     }
 
-    // Преобразовать все элементы массива в числа типа int, просуммировать,
+    // 2. Преобразовать все элементы массива в числа типа int, просуммировать,
     // поделить полученную сумму на 2, и вернуть результат;
-    private static float calculateStringArray(String[][] array) {
+    private static float calculateStringArray(String[][] array) throws NumberFormatException{
 
         int sum = 0;
 
