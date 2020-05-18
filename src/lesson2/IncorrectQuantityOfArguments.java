@@ -2,13 +2,13 @@ package lesson2;
 
 public class IncorrectQuantityOfArguments extends Exception {
 
-    private String s;
+    private String message;
 
-    IncorrectQuantityOfArguments(String s) {
-        this.s = s;
+    IncorrectQuantityOfArguments(String message) {
+        this.message = message;
     }
 
-    public String getString() {
-        return s;
+    public String getMessage() {
+        return message;
     }
 }

@@ -3,7 +3,7 @@ package lesson2;
 public class Homework2 {
 
     public static void main(String[] arg) {
-        final String initString= "13 4 6 2\n2 3 2 25\n300 3 1 132\n3 46 17 r";
+        final String initString= "13 4 6 2\n2 3 2 25\n300 3 1 132\n3 46 17";
         try {
             String[][] resArr = transformString(initString);
             for (int i = 0; i < resArr.length; i++) {
@@ -14,6 +14,7 @@ public class Homework2 {
             }
             System.out.println(calculateStringArray(resArr));
         } catch (IncorrectQuantityOfArguments e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         } catch (NumberFormatException e) {
             e.printStackTrace();
