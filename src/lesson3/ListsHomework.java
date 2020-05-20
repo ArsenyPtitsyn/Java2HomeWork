@@ -14,6 +14,7 @@ public class ListsHomework {
 
     public static void main(String[] args) {
         System.out.println(findListOfWords(words));
+        System.out.println(mapOfRepeatedWords(words));
     }
 
     // List of words in phrase without repetitions.
@@ -33,13 +34,19 @@ public class ListsHomework {
     }
 
     // Count how many times each word occurs.
-//    private static HashMap<String, Integer> mapOfRepeatedWords(String[] s) {
-//
-//        int j = 0;
-//        for (int i = 0; i < s.length; i++) {
-//            if (s[i].equals(?))
-//                j++;
-//            else continue;
-//        }
-//    }
+    private static HashMap<String, Integer> mapOfRepeatedWords(String[] s) {
+
+        HashMap<String, Integer> mapOfWords = new HashMap<>();
+
+        for (int i = 0; i < findListOfWords(s).size(); i++) {
+            int k = 0;
+            for (int j = 0; j < s.length; j++) {
+                if (findListOfWords(s).get(i).equals(s[j]))
+                    k++;
+                else continue;
+            }
+            mapOfWords.put(findListOfWords(s).get(i), k);
+        }
+        return mapOfWords;
+    }
 }
