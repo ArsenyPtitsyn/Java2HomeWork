@@ -9,5 +9,7 @@ public class ListsHomework {
     "and", "binary", "log", "writes", "associated", "with", "a", "DDL",
     "operation", "into", "a", "single", "atomic", "operation"};
 
-    
+    public static void main(String[] args) {
+        
+    }
 }
