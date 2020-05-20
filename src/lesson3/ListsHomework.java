@@ -2,14 +2,27 @@ package lesson3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class ListsHomework {
 
     private static final class Person {
-        private String Surname;
+        private String surName;
         private String name;
         private String middleName;
+
+        Person(String surName, String name, String middleName) {
+            this.surName = surName;
+            this.name = name;
+            this.middleName = middleName;
+        }
+
+        public String getSurname(String surName) {
+            return surName;
+        }
+    }
+
+    private static final class PhoneBook {
+        
     }
 
     private static final String[] words = {"MySQL", "MySQL", "supports", "atomic", "Data",
