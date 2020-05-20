@@ -22,7 +22,8 @@ public class ListsHomework {
     }
 
     private static final class PhoneBook {
-        
+        private String PhoneNumber;
+        private String mail;
     }
 
     private static final String[] words = {"MySQL", "MySQL", "supports", "atomic", "Data",
