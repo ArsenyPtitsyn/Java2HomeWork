@@ -6,6 +6,12 @@ import java.util.HashSet;
 
 public class ListsHomework {
 
+    private static final class Person {
+        private String Surname;
+        private String name;
+        private String middleName;
+    }
+
     private static final String[] words = {"MySQL", "MySQL", "supports", "atomic", "Data",
             "Definition", "Language", "statements", "This", "feature", "is", "supports",
             "feature", "MySQL", "Language", "This", "Definition", "atomic", "statements",
