@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class ListsHomework {
 
-    private static class Person {
+    public static class Person {
         private String surName;
         private String name;
         private String middleName;
@@ -41,8 +41,9 @@ public class ListsHomework {
         }
     }
 
-    private static class PhoneBook {
+    public static class PhoneBook {
         private HashMap<String, String> phoneTable;
+        private HashMap<String, String> mailTable;
     }
 
     private static final String[] words = {"MySQL", "MySQL", "supports", "atomic", "Data",
