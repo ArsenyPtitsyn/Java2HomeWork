@@ -1,11 +1,14 @@
 package lesson3;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ListsHomework {
 
     public static class Person {
+
         private String surName;
         private String name;
         private String middleName;
@@ -42,8 +45,7 @@ public class ListsHomework {
     }
 
     public static class PhoneBook {
-        private HashMap<String, String> phoneTable;
-        private HashMap<String, String> mailTable;
+        
     }
 
     private static final String[] words = {"MySQL", "MySQL", "supports", "atomic", "Data",
