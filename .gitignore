@@ -2,7 +2,7 @@
 .idea/
 out/
 *.iml
-lesson2/
+src/lesson2/
 
 # Compiled class file
 *.class
