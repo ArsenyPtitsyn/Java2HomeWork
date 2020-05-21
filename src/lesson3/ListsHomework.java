@@ -1,52 +1,9 @@
 package lesson3;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ListsHomework {
-
-    public static class Person {
-
-        private String surName;
-        private String name;
-        private String middleName;
-        private String PhoneNumber;
-        private String mail;
-
-        Person(String surName,
-               String name,
-               String middleName,
-               String PhoneNumber,
-               String mail) {
-            this.surName = surName;
-            this.name = name;
-            this.middleName = middleName;
-            this.PhoneNumber = PhoneNumber;
-            this.mail = mail;
-        }
-
-        public String getSurname() {
-            return surName;
-        }
-        public String getName() {
-            return name;
-        }
-        public String getMiddleName() {
-            return middleName;
-        }
-        public String getPhoneNumber() {
-            return PhoneNumber;
-        }
-        public String getMail() {
-            return mail;
-        }
-    }
-
-    public static class PhoneBook {
-        
-    }
 
     private static final String[] words = {"MySQL", "MySQL", "supports", "atomic", "Data",
             "Definition", "Language", "statements", "This", "feature", "is", "supports",
