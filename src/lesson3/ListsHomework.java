@@ -5,25 +5,44 @@ import java.util.HashMap;
 
 public class ListsHomework {
 
-    private static final class Person {
+    private static class Person {
         private String surName;
         private String name;
         private String middleName;
+        private String PhoneNumber;
+        private String mail;
 
-        Person(String surName, String name, String middleName) {
+        Person(String surName,
+               String name,
+               String middleName,
+               String PhoneNumber,
+               String mail) {
             this.surName = surName;
             this.name = name;
             this.middleName = middleName;
+            this.PhoneNumber = PhoneNumber;
+            this.mail = mail;
         }
 
-        public String getSurname(String surName) {
+        public String getSurname() {
             return surName;
+        }
+        public String getName() {
+            return name;
+        }
+        public String getMiddleName() {
+            return middleName;
+        }
+        public String getPhoneNumber() {
+            return PhoneNumber;
+        }
+        public String getMail() {
+            return mail;
         }
     }
 
-    private static final class PhoneBook {
-        private String PhoneNumber;
-        private String mail;
+    private static class PhoneBook {
+        private HashMap<String, String> phoneTable;
     }
 
     private static final String[] words = {"MySQL", "MySQL", "supports", "atomic", "Data",
