@@ -1,4 +1,4 @@
-package ru.gb.jtwo.dlesson.online;
+package lesson4;
 
 import javax.swing.*;
 import java.awt.*;
