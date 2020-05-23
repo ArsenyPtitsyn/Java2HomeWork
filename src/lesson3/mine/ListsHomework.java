@@ -1,4 +1,4 @@
-package lesson3;
+package lesson3.mine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
