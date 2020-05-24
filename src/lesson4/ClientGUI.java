@@ -8,8 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
-import static java.awt.event.KeyEvent.VK_ENTER;
 
 public class ClientGUI extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler, KeyListener {
 
@@ -33,11 +34,11 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
     private final JList<String> userList = new JList<>();
 
     public static void main(String[] args) {
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new ClientGUI();
-            }
+                new ClientGUI();}
         });
     }
 
@@ -111,6 +112,13 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         if (e.getKeyChar() == '\n') {
             if (!tfMessage.getText().equals("")) {
                 log.append(tfMessage.getText() + "\n");
+                try {
+                    writeLogFile("log.txt");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (NullPointerException exc) {
+
+                }
                 tfMessage.setText("");
             } else {
                 log.append("");
@@ -126,5 +134,13 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    private void writeLogFile(String fileName) throws IOException, NullPointerException {
+        FileOutputStream fos = new FileOutputStream(fileName, true);
+
+        fos.write(log.getText().getBytes());
+        fos.flush();
+        fos.close();
     }
 }

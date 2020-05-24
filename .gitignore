@@ -8,6 +8,7 @@ src/lesson2
 *.class
 
 # Log file
+*.txt
 *.log
 
 # BlueJ files
