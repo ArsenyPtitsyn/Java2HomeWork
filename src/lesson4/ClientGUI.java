@@ -1,13 +1,16 @@
 package lesson4;
 
-import com.sun.org.apache.bcel.internal.classfile.ConstantString;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class ClientGUI extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler {
+
+public class ClientGUI extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler{
 
     private static final int WIDTH = 400;
     private static final int HEIGHT = 300;
@@ -77,7 +80,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         Object src = e.getSource();
         if (src == cbAlwaysOnTop) {
             setAlwaysOnTop(cbAlwaysOnTop.isSelected());
-        } else if (src == btnSend || tfMessage.getText().endsWith("/n")) {
+        } else if (src == btnSend) {
             if (!tfMessage.getText().equals("")) {
                 log.append(tfMessage.getText() + "\n");
                 tfMessage.setText("");
