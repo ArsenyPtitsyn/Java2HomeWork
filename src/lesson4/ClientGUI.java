@@ -9,8 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import static java.awt.event.KeyEvent.VK_ENTER;
 
-public class ClientGUI extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler{
+public class ClientGUI extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler, KeyListener {
 
     private static final int WIDTH = 400;
     private static final int HEIGHT = 300;
@@ -54,6 +55,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         scrollUser.setPreferredSize(new Dimension(100, 0));
         cbAlwaysOnTop.addActionListener(this);
         btnSend.addActionListener(this);
+        tfMessage.addKeyListener(this);
 
         panelTop.add(tfIPAddress);
         panelTop.add(tfPort);
@@ -102,5 +104,27 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
                 t.getName(), e.getClass().getCanonicalName(), e.getMessage(), ste[0]);
         JOptionPane.showMessageDialog(this, msg, "Exception", JOptionPane.ERROR_MESSAGE);
         System.exit(1);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if (e.getKeyChar() == '\n') {
+            if (!tfMessage.getText().equals("")) {
+                log.append(tfMessage.getText() + "\n");
+                tfMessage.setText("");
+            } else {
+                log.append("");
+            }
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
