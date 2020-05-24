@@ -1,5 +1,7 @@
 package lesson4;
 
+import com.sun.org.apache.bcel.internal.classfile.ConstantString;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -75,9 +77,14 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         Object src = e.getSource();
         if (src == cbAlwaysOnTop) {
             setAlwaysOnTop(cbAlwaysOnTop.isSelected());
-        } else if (src == btnSend) {
-            log.append(tfMessage.getText() + "\n");
-            tfMessage.setText("");
+        } else if (src == btnSend || tfMessage.getText().endsWith("/n")) {
+            if (!tfMessage.getText().equals("")) {
+                log.append(tfMessage.getText() + "\n");
+                tfMessage.setText("");
+            }
+            else {
+                log.append("");
+            }
         } else {
             throw new RuntimeException("Unknown source: " + src);
         }
