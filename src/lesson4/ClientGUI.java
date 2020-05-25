@@ -115,6 +115,8 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
                 writeLogFile("file.log");
             } catch (IOException ex) {
                 ex.printStackTrace();
+            } catch (NullPointerException exc) {
+                exc.getStackTrace();
             }
             tfMessage.setText("");
         } else {
