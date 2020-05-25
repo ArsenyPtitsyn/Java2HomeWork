@@ -10,6 +10,7 @@ src/lesson2
 # Log file
 *.txt
 *.log
+*.txt
 
 # BlueJ files
 *.ctxt
