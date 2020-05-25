@@ -84,13 +84,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         if (src == cbAlwaysOnTop) {
             setAlwaysOnTop(cbAlwaysOnTop.isSelected());
         } else if (src == btnSend) {
-            if (!tfMessage.getText().equals("")) {
-                log.append(tfMessage.getText() + "\n");
-                tfMessage.setText("");
-            }
-            else {
-                log.append("");
-            }
+            writeLog();
         } else {
             throw new RuntimeException("Unknown source: " + src);
         }
@@ -110,19 +104,21 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == '\n') {
-            if (!tfMessage.getText().equals("")) {
-                log.append(tfMessage.getText() + "\n");
-                try {
-                    writeLogFile("log.txt");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (NullPointerException exc) {
+            writeLog();
+        }
+    }
 
-                }
-                tfMessage.setText("");
-            } else {
-                log.append("");
+    private void writeLog() {
+        if (!tfMessage.getText().equals("")) {
+            log.append(tfMessage.getText() + "\n");
+            try {
+                writeLogFile("file.log");
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
+            tfMessage.setText("");
+        } else {
+            log.append("");
         }
     }
 
@@ -139,7 +135,8 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
     private void writeLogFile(String fileName) throws IOException, NullPointerException {
         FileOutputStream fos = new FileOutputStream(fileName, true);
 
-        fos.write(log.getText().getBytes());
+        fos.write(tfMessage.getText().getBytes());
+        fos.write('\n');
         fos.flush();
         fos.close();
     }
