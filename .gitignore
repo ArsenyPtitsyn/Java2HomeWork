@@ -2,15 +2,13 @@
 .idea/
 out/
 *.iml
-src/lesson2
 
 # Compiled class file
 *.class
 
 # Log file
-*.txt
 *.log
-*.txt
+
 
 # BlueJ files
 *.ctxt
