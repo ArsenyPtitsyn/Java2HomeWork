@@ -31,7 +31,7 @@ public class HomeWork5 {
 
     private static synchronized void multipleThreadsMethod() {
 
-        // Create a one-dimensional long array
+        // Create a one-dimensional long array and two split arrays
         float[] arr = new float[size];
         float[] a1 = new float[h];
         float[] a2 = new float[h];
@@ -44,9 +44,24 @@ public class HomeWork5 {
         // Mark the time before starting to fill the array
         long a = System.currentTimeMillis();
 
-        // Splitting the array into two parts
-        System.arraycopy(arr, 0, a1, 0, h);
-        System.arraycopy(arr, h, a2, 0, h);
+        // Create two threads
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                splitArray();
+                calculateElements();
+                mergeArrays();
+            }
+        };
+    }
+
+    private void splitArray(float[] a) {
+        // Split the array into two parts
+
+
+
+        System.arraycopy(a, 0, a1, 0, h);
+        System.arraycopy(a, h, a2, 0, h);
     }
 
     public static void main(String[] args) {
