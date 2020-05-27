@@ -48,20 +48,16 @@ public class HomeWork5 {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                splitArray();
+
+                // Split the array into two parts using two threads
+                System.arraycopy(a, 0, a1, 0, h);
+                System.arraycopy(a, h, a2, 0, h);
+
+                // Fill the array with new values using the formula and two threads
                 calculateElements();
                 mergeArrays();
             }
         };
-    }
-
-    private void splitArray(float[] a) {
-        // Split the array into two parts
-
-
-
-        System.arraycopy(a, 0, a1, 0, h);
-        System.arraycopy(a, h, a2, 0, h);
     }
 
     public static void main(String[] args) {
