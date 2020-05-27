@@ -29,10 +29,24 @@ public class HomeWork5 {
         System.out.println(b -a);
     }
 
-    private static synchronized void multipleThreadsMethod() {
+    private static void multipleThreadsMethod() {
 
         // Create a one-dimensional long array
         float[] arr = new float[size];
+        float[] a1 = new float[h];
+        float[] a2 = new float[h];
+
+        // Fill the array with "1"
+        for (int i = 0; i < size; i++) {
+            arr[i] = 1;
+        }
+
+        // Mark the time before starting to fill the array
+        long a = System.currentTimeMillis();
+
+        // Splitting the array into two parts
+        System.arraycopy(arr, 0, a1, 0, h);
+        System.arraycopy(arr, h, a2, 0, h);
     }
 
     public static void main(String[] args) {
