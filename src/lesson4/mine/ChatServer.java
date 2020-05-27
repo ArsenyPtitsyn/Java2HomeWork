@@ -1,4 +1,4 @@
-package lesson4;
+package lesson4.mine;
 
 public class ChatServer {
     public void start(int port) {
