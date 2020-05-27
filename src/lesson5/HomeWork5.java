@@ -29,7 +29,7 @@ public class HomeWork5 {
         System.out.println(b -a);
     }
 
-    private static void multipleThreadsMethod() {
+    private static synchronized void multipleThreadsMethod() {
 
         // Create a one-dimensional long array
         float[] arr = new float[size];
