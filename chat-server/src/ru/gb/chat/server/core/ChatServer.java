@@ -5,10 +5,13 @@ import ru.gb.jtwo.network.ServerSocketThreadListener;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class ChatServer implements ServerSocketThreadListener {
 
-    ServerSocketThread server;
+    private ServerSocketThread server;
+    private final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss: ");
 
     public void start(int port) {
         if (server == null || !server.isAlive())
@@ -26,6 +29,8 @@ public class ChatServer implements ServerSocketThreadListener {
     }
 
     private void putLog(String msg) {
+        msg = DATE_FORMAT.format(System.currentTimeMillis()) +
+                Thread.currentThread().getName() + ":" + msg;
         System.out.println(msg);
     }
 
@@ -55,7 +60,9 @@ public class ChatServer implements ServerSocketThreadListener {
 
     @Override
     public void onSocketAccepted(ServerSocketThread thread, ServerSocket server, Socket socket) {
-        
+        putLog("Client connected");
+        String name = "SocketThread " + socket.getInetAddress() + ":" + socket.getPort();
+        //do some useful things for server
     }
 
     @Override
