@@ -9,34 +9,37 @@ public class ServerSocketThread extends Thread {
 
     int port;
     int timeout;
+    ServerSocketThreadListener listener;
 
-    public ServerSocketThread(String name, int port, int timeout) {
+    public ServerSocketThread(ServerSocketThreadListener listener, String name, int port, int timeout) {
         super(name);
         this.port = port;
         this.timeout = timeout;
+        this.listener = listener;
         start();
     }
 
     @Override
     public void run() {
-        System.out.println("Server started");
+        listener.onServerStart(this);
         try (ServerSocket server = new ServerSocket(port)) {
             server.setSoTimeout(timeout);
+            listener.onServerCreated(this, server);
             while (!isInterrupted()) {
                 Socket socket;
                 try {
                     socket = server.accept();
                 } catch (SocketTimeoutException e) {
-                    System.out.println("PING? PONG!");
+                    listener.onServerTimeout(this, server);
                     continue;
                 }
-                    System.out.println("Socket accept");
+                    listener.onSocketAccepted(this, server, socket);
 
             }
         } catch (IOException e) {
-            System.out.println(e);
+            listener.onServerException(this, e);
         } finally {
-            System.out.println("Server stopped");
+            listener.onServerStop(this);
         }
     }
 }
