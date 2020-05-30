@@ -1,8 +1,8 @@
 package lesson6;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -12,11 +12,12 @@ public class EchoServer {
         try (ServerSocket serverSocket = new ServerSocket(8189);
                 Socket currentClient = serverSocket.accept()) {
             System.out.println("к нам подключился клиент");
-            InputStream in = currentClient.getInputStream();
-            OutputStream out = currentClient.getOutputStream();
-            int b = in.read();
-            System.out.println("приняли байт " + b + ". Отправим " + (b + 1));
-            out.write(b + 1);
+            DataInputStream in = new DataInputStream(currentClient.getInputStream());
+            DataOutputStream out = new DataOutputStream(currentClient.getOutputStream());
+            while (true) {
+                String str = in.readUTF();
+                out.writeUTF("echo: " + str);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

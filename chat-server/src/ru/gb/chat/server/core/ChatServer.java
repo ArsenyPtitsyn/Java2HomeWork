@@ -8,7 +8,7 @@ public class ChatServer {
 
     public void start(int port) {
         if (server == null || !server.isAlive())
-            server = new ServerSocketThread("Server", port);
+            server = new ServerSocketThread("Server", port, 2000);
         else
             System.out.println("Server already started");
     }
