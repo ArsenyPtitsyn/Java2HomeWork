@@ -2,13 +2,15 @@ package ru.gb.chat.server.core;
 
 import ru.gb.jtwo.network.ServerSocketThread;
 import ru.gb.jtwo.network.ServerSocketThreadListener;
+import ru.gb.jtwo.network.SocketThread;
+import ru.gb.jtwo.network.SocketThreadListener;
 
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class ChatServer implements ServerSocketThreadListener {
+public class ChatServer implements ServerSocketThreadListener, SocketThreadListener {
 
     private ServerSocketThread server;
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss: ");
@@ -55,18 +57,47 @@ public class ChatServer implements ServerSocketThreadListener {
 
     @Override
     public void onServerTimeout(ServerSocketThread thread, ServerSocket server) {
-        putLog("PING? PONG!");
+//        putLog("PING? PONG!"); //useless information
     }
 
     @Override
     public void onSocketAccepted(ServerSocketThread thread, ServerSocket server, Socket socket) {
         putLog("Client connected");
         String name = "SocketThread " + socket.getInetAddress() + ":" + socket.getPort();
-        //do some useful things for server
+        new SocketThread(name, this, socket);
     }
 
     @Override
     public void onServerException(ServerSocketThread thread, Throwable throwable) {
+        throwable.printStackTrace();
+    }
+
+    /**
+     * Socket Thread Listener Methods
+     * */
+
+    @Override
+    public void onSocketStart(SocketThread thread, Socket socket) {
+        putLog("Client connected");
+    }
+
+    @Override
+    public void onSocketStop(SocketThread thread) {
+        putLog("Client disconnected");
+    }
+
+    @Override
+    public void onSocketReady(SocketThread thread, Socket socket) {
+        putLog("Client is ready to chat");
+    }
+
+    @Override
+    public void onReceiveString(SocketThread thread, Socket socket, String msg) {
+        thread.sendMessage("Echo: " + msg);
+    }
+
+    @Override
+    public void onSocketException(SocketThread thread, Throwable throwable) {
         throwable.printStackTrace();
     }
 }

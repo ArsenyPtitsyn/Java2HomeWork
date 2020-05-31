@@ -1,13 +1,18 @@
 package ru.gb.chat.client;
 
+import ru.gb.jtwo.network.SocketThread;
+import ru.gb.jtwo.network.SocketThreadListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.Socket;
 
-public class ClientGUI extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler {
+public class ClientGUI extends JFrame implements ActionListener,
+        Thread.UncaughtExceptionHandler, SocketThreadListener {
 
     private static final int WIDTH = 400;
     private static final int HEIGHT = 300;
@@ -28,6 +33,8 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
 
     private final JList<String> userList = new JList<>();
     private boolean shownIoErrors = false;
+
+    SocketThread socketThread;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -83,22 +90,30 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         } else if (src == btnSend || src == tfMessage) {
             sendMessage();
         } else if (src == btnLogin) {
-            for (long i = 0; i < 10_000_000_000L; i++) {
-                long a = i * 432;
-            }
+            connect();
         } else {
             throw new RuntimeException("Unknown source: " + src);
         }
     }
 
+    private void connect() {
+        try {
+            Socket socket = new Socket(tfIPAddress.getText(), Integer.parseInt(tfPort.getText()));
+            socketThread = new SocketThread("Client", this, socket);
+        } catch (IOException e) {
+            showException(Thread.currentThread(), e);
+        }
+    }
+
     private void sendMessage() {
         String msg = tfMessage.getText();
-        String username = tfLogin.getText();
+//        String username = tfLogin.getText();
         if ("".equals(msg)) return;
         tfMessage.setText(null);
         tfMessage.grabFocus();
-        putLog(String.format("%s: %s", username, msg));
-        wrtMsgToLogFile(msg, username);
+        socketThread.sendMessage(msg);
+//        putLog(String.format("%s: %s", username, msg));
+//        wrtMsgToLogFile(msg, username);
     }
 
     private void wrtMsgToLogFile(String msg, String username) {
@@ -143,4 +158,32 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         System.exit(1);
     }
 
+    /**
+     * Socket Thread Listener Methods
+     * */
+
+    @Override
+    public void onSocketStart(SocketThread thread, Socket socket) {
+        putLog("Start");
+    }
+
+    @Override
+    public void onSocketStop(SocketThread thread) {
+        putLog("Stop");
+    }
+
+    @Override
+    public void onSocketReady(SocketThread thread, Socket socket) {
+        putLog("Ready");
+    }
+
+    @Override
+    public void onReceiveString(SocketThread thread, Socket socket, String msg) {
+        putLog(msg);
+    }
+
+    @Override
+    public void onSocketException(SocketThread thread, Throwable throwable) {
+        showException(thread, throwable);
+    }
 }
