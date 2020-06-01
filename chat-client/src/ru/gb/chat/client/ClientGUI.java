@@ -101,7 +101,7 @@ public class ClientGUI extends JFrame implements ActionListener,
             panelBottom.setVisible(true);
             panelTop.setVisible(false);
         } else if (src == btnDisconnect) {
-            // Disconnect
+            socketThread.close();
         } else {
             throw new RuntimeException("Unknown source: " + src);
         }
