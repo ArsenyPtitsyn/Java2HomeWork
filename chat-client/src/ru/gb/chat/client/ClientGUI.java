@@ -14,7 +14,7 @@ import java.net.Socket;
 public class ClientGUI extends JFrame implements ActionListener,
         Thread.UncaughtExceptionHandler, SocketThreadListener {
 
-    private static final int WIDTH = 400;
+    private static final int WIDTH = 600;
     private static final int HEIGHT = 300;
 
     private final JTextArea log = new JTextArea();
@@ -29,7 +29,9 @@ public class ClientGUI extends JFrame implements ActionListener,
     private final JPanel panelBottom = new JPanel(new BorderLayout());
     private final JButton btnDisconnect = new JButton("<html><b>Disconnect</b></html>");
     private final JTextField tfMessage = new JTextField();
+    private final JPanel paneEastBottom = new JPanel(new GridLayout(1, 2));
     private final JButton btnSend = new JButton("Send");
+    private final JButton btnSendAll = new JButton("Send to all");
 
     private final JList<String> userList = new JList<>();
     private boolean shownIoErrors = false;
@@ -71,7 +73,10 @@ public class ClientGUI extends JFrame implements ActionListener,
 
         panelBottom.add(btnDisconnect, BorderLayout.WEST);
         panelBottom.add(tfMessage, BorderLayout.CENTER);
-        panelBottom.add(btnSend, BorderLayout.EAST);
+        panelBottom.add(paneEastBottom, BorderLayout.EAST);
+
+        paneEastBottom.add(btnSend);
+        paneEastBottom.add(btnSendAll);
 
         add(scrollLog, BorderLayout.CENTER);
         add(scrollUser, BorderLayout.EAST);
