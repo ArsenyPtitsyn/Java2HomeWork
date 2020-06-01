@@ -83,6 +83,8 @@ public class ClientGUI extends JFrame implements ActionListener,
         add(panelTop, BorderLayout.NORTH);
         add(panelBottom, BorderLayout.SOUTH);
 
+        panelBottom.setVisible(false);
+
         setVisible(true);
     }
 
@@ -96,6 +98,10 @@ public class ClientGUI extends JFrame implements ActionListener,
             sendMessage();
         } else if (src == btnLogin) {
             connect();
+            panelBottom.setVisible(true);
+            panelTop.setVisible(false);
+        } else if (src == btnDisconnect) {
+            // Disconnect
         } else {
             throw new RuntimeException("Unknown source: " + src);
         }
