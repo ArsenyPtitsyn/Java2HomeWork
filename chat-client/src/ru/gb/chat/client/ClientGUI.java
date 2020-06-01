@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
 
 public class ClientGUI extends JFrame implements ActionListener,
@@ -99,8 +100,6 @@ public class ClientGUI extends JFrame implements ActionListener,
             sendMessage();
         } else if (src == btnLogin) {
             connect();
-            panelBottom.setVisible(true);
-            panelTop.setVisible(false);
         } else if (src == btnDisconnect) {
             socketThread.close();
             panelBottom.setVisible(false);
@@ -114,6 +113,10 @@ public class ClientGUI extends JFrame implements ActionListener,
         try {
             Socket socket = new Socket(tfIPAddress.getText(), Integer.parseInt(tfPort.getText()));
             socketThread = new SocketThread("Client", this, socket);
+            panelBottom.setVisible(true);
+            panelTop.setVisible(false);
+        } catch (ConnectException e) {
+            showException(Thread.currentThread(), e);
         } catch (IOException e) {
             showException(Thread.currentThread(), e);
         }
