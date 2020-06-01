@@ -63,6 +63,7 @@ public class ClientGUI extends JFrame implements ActionListener,
         btnSend.addActionListener(this);
         tfMessage.addActionListener(this);
         btnLogin.addActionListener(this);
+        btnDisconnect.addActionListener(this);
 
         panelTop.add(tfIPAddress);
         panelTop.add(tfPort);
@@ -102,6 +103,8 @@ public class ClientGUI extends JFrame implements ActionListener,
             panelTop.setVisible(false);
         } else if (src == btnDisconnect) {
             socketThread.close();
+            panelBottom.setVisible(false);
+            panelTop.setVisible(true);
         } else {
             throw new RuntimeException("Unknown source: " + src);
         }
