@@ -61,6 +61,7 @@ public class ClientGUI extends JFrame implements ActionListener,
         btnSend.addActionListener(this);
         tfMessage.addActionListener(this);
         btnLogin.addActionListener(this);
+        btnDisconnect.addActionListener(this);
 
         panelTop.add(tfIPAddress);
         panelTop.add(tfPort);
@@ -72,6 +73,7 @@ public class ClientGUI extends JFrame implements ActionListener,
         panelBottom.add(btnDisconnect, BorderLayout.WEST);
         panelBottom.add(tfMessage, BorderLayout.CENTER);
         panelBottom.add(btnSend, BorderLayout.EAST);
+        panelBottom.setVisible(false);
 
         add(scrollLog, BorderLayout.CENTER);
         add(scrollUser, BorderLayout.EAST);
@@ -91,6 +93,8 @@ public class ClientGUI extends JFrame implements ActionListener,
             sendMessage();
         } else if (src == btnLogin) {
             connect();
+        } else if (src == btnDisconnect) {
+            socketThread.close();
         } else {
             throw new RuntimeException("Unknown source: " + src);
         }
@@ -170,11 +174,15 @@ public class ClientGUI extends JFrame implements ActionListener,
     @Override
     public void onSocketStop(SocketThread thread) {
         putLog("Stop");
+        panelBottom.setVisible(false);
+        panelTop.setVisible(true);
     }
 
     @Override
     public void onSocketReady(SocketThread thread, Socket socket) {
         putLog("Ready");
+        panelBottom.setVisible(true);
+        panelTop.setVisible(false);
     }
 
     @Override
@@ -185,5 +193,6 @@ public class ClientGUI extends JFrame implements ActionListener,
     @Override
     public void onSocketException(SocketThread thread, Throwable throwable) {
         showException(thread, throwable);
+        thread.close();
     }
 }

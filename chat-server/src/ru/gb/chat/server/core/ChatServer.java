@@ -9,10 +9,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Vector;
 
 public class ChatServer implements ServerSocketThreadListener, SocketThreadListener {
 
     ChatServerListener listener;
+    private Vector<SocketThread> clients = new Vector<>();
 
     public ChatServer(ChatServerListener listener) {
         this.listener = listener;
@@ -90,20 +92,26 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
     @Override
     public void onSocketStop(SocketThread thread) {
         putLog("Client disconnected");
+        clients.remove(thread);
     }
 
     @Override
     public void onSocketReady(SocketThread thread, Socket socket) {
         putLog("Client is ready to chat");
+        clients.add(thread);
     }
 
     @Override
     public void onReceiveString(SocketThread thread, Socket socket, String msg) {
-        thread.sendMessage("Echo: " + msg);
+        for (int i = 0; i < clients.size(); i++) {
+            SocketThread client = clients.get(i);
+            client.sendMessage(msg);
+        }
     }
 
     @Override
     public void onSocketException(SocketThread thread, Throwable throwable) {
         throwable.printStackTrace();
+        thread.close();
     }
 }
