@@ -1,5 +1,6 @@
 package ru.gb.chat.server.core;
 
+import ru.gb.chat.library.Library;
 import ru.gb.jtwo.network.ServerSocketThread;
 import ru.gb.jtwo.network.ServerSocketThreadListener;
 import ru.gb.jtwo.network.SocketThread;
@@ -72,7 +73,7 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
     public void onSocketAccepted(ServerSocketThread thread, ServerSocket server, Socket socket) {
         putLog("Client connected");
         String name = "SocketThread " + socket.getInetAddress() + ":" + socket.getPort();
-        new SocketThread(name, this, socket);
+        new ClientThread(name, this, socket);
     }
 
     @Override
@@ -103,8 +104,39 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
 
     @Override
     public void onReceiveString(SocketThread thread, Socket socket, String msg) {
+        ClientThread client = (ClientThread) thread;
+        if (client.isAuthorized()) {
+            handleAuthMessage(client, msg);
+        } else {
+            handleNonAuthMessage(client, msg);
+        }
+    }
+
+    private void handleNonAuthMessage(ClientThread client, String msg) {
+        String[] arr = msg.split(Library.DELIMITER);
+        if (arr.length != 3 || !arr[0].equals(Library.AUTH_REQUEST)) {
+            client.msgFormatError(msg);
+            return;
+        }
+        String login = arr[1];
+        String password = arr[2];
+        String nickname = SqlClient.getNickname(login, password);
+        if (nickname == null) {
+            client.authFail();
+            return;
+        }
+        client.authAccept(nickname);
+        sendToAllAuthorizedClients(Library.getTypeBroadcast("Server", nickname + " connected"));
+    }
+
+    private void handleAuthMessage(ClientThread client, String msg) {
+        sendToAllAuthorizedClients(msg);
+    }
+
+    private void sendToAllAuthorizedClients(String msg) {
         for (int i = 0; i < clients.size(); i++) {
-            SocketThread client = clients.get(i);
+            ClientThread client = (ClientThread) clients.get(i);
+            if (!client.isAuthorized()) continue;
             client.sendMessage(msg);
         }
     }

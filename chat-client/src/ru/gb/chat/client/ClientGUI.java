@@ -1,5 +1,6 @@
 package ru.gb.chat.client;
 
+import ru.gb.chat.library.Library;
 import ru.gb.jtwo.network.SocketThread;
 import ru.gb.jtwo.network.SocketThreadListener;
 
@@ -183,6 +184,9 @@ public class ClientGUI extends JFrame implements ActionListener,
         putLog("Ready");
         panelBottom.setVisible(true);
         panelTop.setVisible(false);
+        String login = tfLogin.getText();
+        String password = new String(tfPassword.getPassword());
+        thread.sendMessage(Library.getAuthRequest(login, password));
     }
 
     @Override
