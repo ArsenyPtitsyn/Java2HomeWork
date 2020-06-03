@@ -12,6 +12,12 @@ import java.text.SimpleDateFormat;
 
 public class ChatServer implements ServerSocketThreadListener, SocketThreadListener {
 
+    ChatServerListener listener;
+
+    public ChatServer(ChatServerListener listener) {
+        this.listener = listener;
+    }
+
     private ServerSocketThread server;
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss: ");
 
@@ -19,12 +25,12 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
         if (server == null || !server.isAlive())
             server = new ServerSocketThread(this, "Server", port, 2000);
         else
-            System.out.println("Server already started");
+            putLog("Server already started");
     }
 
     public void stop() {
         if (server == null || !server.isAlive()) {
-            System.out.println("Server is not running");
+            putLog("Server is not running");
         } else {
             server.interrupt();
         }
@@ -33,7 +39,7 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
     private void putLog(String msg) {
         msg = DATE_FORMAT.format(System.currentTimeMillis()) +
                 Thread.currentThread().getName() + ":" + msg;
-        System.out.println(msg);
+        listener.onChatServerMessage(msg);
     }
 
     /**
