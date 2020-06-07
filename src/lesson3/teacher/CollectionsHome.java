@@ -1,4 +1,4 @@
-package ru.gb.jtwo.clesson.home;
+package lesson3.teacher;
 
 import java.util.Arrays;
 import java.util.HashMap;
