@@ -49,7 +49,7 @@ public class SocketThread extends Thread{
         }
     }
 
-    public void close() {
+    public synchronized void close() {
         try {
             in.close();
         } catch (IOException e) {
