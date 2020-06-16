@@ -92,12 +92,12 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
      * */
 
     @Override
-    public void onSocketStart(SocketThread thread, Socket socket) {
+    public synchronized void onSocketStart(SocketThread thread, Socket socket) {
         putLog("Client connected");
     }
 
     @Override
-    public void onSocketStop(SocketThread thread) {
+    public synchronized void onSocketStop(SocketThread thread) {
         ClientThread client = (ClientThread) thread;
         clients.remove(thread);
         if (client.isAuthorized() && !client.isReconnecting()) {
@@ -108,19 +108,18 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
     }
 
     @Override
-    public void onSocketReady(SocketThread thread, Socket socket) {
+    public synchronized void onSocketReady(SocketThread thread, Socket socket) {
         putLog("Client is ready to chat");
         clients.add(thread);
     }
 
     @Override
-    public void onReceiveString(SocketThread thread, Socket socket, String msg) {
+    public synchronized void onReceiveString(SocketThread thread, Socket socket, String msg) {
         ClientThread client = (ClientThread) thread;
         if (client.isAuthorized()) {
             handleAuthMessage(client, msg);
-        } else {
+        } else
             handleNonAuthMessage(client, msg);
-        }
     }
 
     private void handleNonAuthMessage(ClientThread newClient, String msg) {
@@ -157,7 +156,7 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
                         client.getNickname(), arr[1]));
                 break;
             default:
-                client.msgFormatError(Library.getMsgFormatError(msg));
+                client.sendMessage(Library.getMsgFormatError(msg));
         }
     }
 
@@ -165,12 +164,12 @@ public class ChatServer implements ServerSocketThreadListener, SocketThreadListe
         for (int i = 0; i < clients.size(); i++) {
             ClientThread client = (ClientThread) clients.get(i);
             if (!client.isAuthorized()) continue;
-            client.sendMessage(Library.getTypeBroadcast(client.getNickname() ,msg));
+            client.sendMessage(msg);
         }
     }
 
     @Override
-    public void onSocketException(SocketThread thread, Throwable throwable) {
+    public synchronized void onSocketException(SocketThread thread, Throwable throwable) {
         throwable.printStackTrace();
         thread.close();
     }

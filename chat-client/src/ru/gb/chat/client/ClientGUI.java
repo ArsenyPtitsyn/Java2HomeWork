@@ -38,8 +38,8 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
     private boolean shownIoErrors = false;
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss: ");
 
-    SocketThread socketThread;
-    private static final String WINDOW_TITLE = "chat";
+    private SocketThread socketThread;
+    private static final String WINDOW_TITLE = "Chat";
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -118,8 +118,6 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         tfMessage.setText(null);
         tfMessage.grabFocus();
         socketThread.sendMessage(Library.getTypeBcastClient(msg));
-//        putLog(String.format("%s: %s", username, msg));
-//        wrtMsgToLogFile(msg, username);
     }
 
     private void wrtMsgToLogFile(String msg, String username) {
@@ -175,7 +173,6 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
 
     @Override
     public void onSocketStop(SocketThread thread) {
-        putLog("Stop");
         panelBottom.setVisible(false);
         panelTop.setVisible(true);
         setTitle(WINDOW_TITLE);
@@ -215,10 +212,11 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
                 putLog(DATE_FORMAT.format(Long.parseLong(arr[1])) + ": " + arr[2] + ": " + arr[3] + "\n");
                 break;
             case Library.USER_LIST:
-                String users =msg.substring(Library.USER_LIST.length() + Library.DELIMITER.length());
+                String users = msg.substring(Library.USER_LIST.length() + Library.DELIMITER.length());
                 String[] usersArr = users.split(Library.DELIMITER);
                 Arrays.sort(usersArr);
                 userList.setListData(usersArr);
+                break;
             default:
                 throw new RuntimeException("Unknown message type: " + msg);
         }

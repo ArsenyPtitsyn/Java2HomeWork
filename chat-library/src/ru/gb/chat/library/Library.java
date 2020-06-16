@@ -2,11 +2,12 @@ package ru.gb.chat.library;
 
 public class Library {
     /*
-    * /auth_request login password
-    * /auth_accept nickname
+    * /auth_request±login±password
+    * /auth_accept±nickname
     * /auth_error
-    * /broadcast msg
+    * /broadcast±msg
     * /msg_format_error
+    * /user_list±user1±user2±user3
     * */
 
     public static final String DELIMITER = "±";
