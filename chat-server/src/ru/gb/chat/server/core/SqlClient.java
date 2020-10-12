@@ -20,8 +20,8 @@ public class SqlClient {
     synchronized static void disconnect() {
         try {
             connection.close();
-        } catch (SQLException throwables) {
-            throw new RuntimeException(throwables);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -33,8 +33,8 @@ public class SqlClient {
             if (rs.next()) {
                 return rs.getString("nickname");
             }
-        } catch (SQLException throwables) {
-            throw new RuntimeException(throwables);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return null;
     }
