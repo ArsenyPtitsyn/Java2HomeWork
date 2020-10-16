@@ -42,12 +42,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
     private static final String WINDOW_TITLE = "Chat";
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new ClientGUI();
-            }
-        });
+        SwingUtilities.invokeLater(ClientGUI::new);
     }
 
     private ClientGUI() {
@@ -134,12 +129,9 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
 
     private void putLog(String msg) {
         if ("".equals(msg)) return;
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                log.append(msg + "\n");
-                log.setCaretPosition(log.getDocument().getLength());
-            }
+        SwingUtilities.invokeLater(() -> {
+            log.append(msg + "\n");
+            log.setCaretPosition(log.getDocument().getLength());
         });
     }
 
