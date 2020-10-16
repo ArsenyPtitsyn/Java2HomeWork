@@ -21,6 +21,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
     private static final int HEIGHT = 300;
 
     private final JTextArea log = new JTextArea();
+
     private final JPanel panelTop = new JPanel(new GridLayout(2, 3));
     private final JTextField tfIPAddress = new JTextField("127.0.0.1");
     private final JTextField tfPort = new JTextField("8189");
