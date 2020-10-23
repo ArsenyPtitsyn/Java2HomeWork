@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileWriter;
+// import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
 import java.text.DateFormat;
@@ -36,7 +36,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
     private final JButton btnSend = new JButton("Send");
 
     private final JList<String> userList = new JList<>();
-    private boolean shownIoErrors = false;
+    // private boolean shownIoErrors = false;
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss: ");
 
     private SocketThread socketThread;
@@ -116,17 +116,17 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         socketThread.sendMessage(Library.getTypeBcastClient(msg));
     }
 
-    private void wrtMsgToLogFile(String msg, String username) {
-        try (FileWriter out = new FileWriter("log.txt", true)) {
-            out.write(username + ": " + msg + "\n");
-            out.flush();
-        } catch (IOException e) {
-            if (!shownIoErrors) {
-                shownIoErrors = true;
-                showException(Thread.currentThread(), e);
-            }
-        }
-    }
+//    private void wrtMsgToLogFile(String msg, String username) {
+//        try (FileWriter out = new FileWriter("log.txt", true)) {
+//            out.write(username + ": " + msg + "\n");
+//            out.flush();
+//        } catch (IOException e) {
+//            if (!shownIoErrors) {
+//                shownIoErrors = true;
+//                showException(Thread.currentThread(), e);
+//            }
+//        }
+//    }
 
     private void putLog(String msg) {
         if ("".equals(msg)) return;
