@@ -51,7 +51,7 @@ public class SocketThread extends Thread{
         try {
             in.close();
         } catch (IOException e) {
-            listener.onSocketException(this,e);
+            listener.onSocketException(this, e);
         }
         interrupt();
         try {
