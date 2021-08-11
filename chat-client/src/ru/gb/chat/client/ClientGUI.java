@@ -136,6 +136,10 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         });
     }
 
+    private void showHistory(String s) {
+        putLog();
+    }
+
     private void showException(Thread t, Throwable e) {
         String msg;
         StackTraceElement[] ste = e.getStackTrace();
@@ -193,6 +197,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         switch (msgType) {
             case Library.AUTH_ACCEPT:
                 setTitle(WINDOW_TITLE + ": " + arr[1]);
+                showHistory(arr[1]);
                 break;
             case Library.AUTH_DENIED:
                 putLog("Wrong login/password");
