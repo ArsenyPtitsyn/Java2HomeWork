@@ -136,7 +136,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         });
     }
 
-    private void showHistory(String s) {
+    private void showHistory(String nickname) {
         putLog();
     }
 
