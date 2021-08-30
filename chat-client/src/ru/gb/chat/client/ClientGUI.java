@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
@@ -41,6 +42,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
 
     private SocketThread socketThread;
     private static final String WINDOW_TITLE = "Chat";
+    private FileWriter fileWriter;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(ClientGUI::new);
@@ -116,10 +118,10 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         socketThread.sendMessage(Library.getTypeBcastClient(msg));
     }
 
-    private void wrtMsgToLogFile(String msg, String username) {
-        try (FileWriter out = new FileWriter("history_" + username + ".txt", true)) {
-            out.write(username + ": " + msg + "\n");
-            out.flush();
+    private void writeMsgToLogFile(String msg, String username) {
+        try {
+            fileWriter.write(username + ": " + msg + "\n");
+            fileWriter.flush();
         } catch (IOException e) {
             if (!shownIoErrors) {
                 shownIoErrors = true;
@@ -136,9 +138,16 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         });
     }
 
-    private void showHistory(String nickname) {
-        putLog();
-    }
+//    private void showHistory(String username) {
+//        try (FileReader in = new FileReader("history_" + username + ".txt")) {
+//
+//        } catch (IOException e) {
+//            if (!shownIoErrors) {
+//                shownIoErrors = true;
+//                showException(Thread.currentThread(), e);
+//            }
+//        }
+//    }
 
     private void showException(Thread t, Throwable e) {
         String msg;
@@ -174,6 +183,11 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         panelTop.setVisible(true);
         setTitle(WINDOW_TITLE);
         userList.setListData(new String[0]);
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -197,7 +211,15 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         switch (msgType) {
             case Library.AUTH_ACCEPT:
                 setTitle(WINDOW_TITLE + ": " + arr[1]);
-                showHistory(arr[1]);
+                try {
+                    fileWriter = new FileWriter("history_" + tfLogin.getText() + ".txt", true);
+                } catch (IOException e) {
+                    if (!shownIoErrors) {
+                        shownIoErrors = true;
+                        showException(Thread.currentThread(), e);
+                    }
+                }
+                //showHistory(arr[1]);
                 break;
             case Library.AUTH_DENIED:
                 putLog("Wrong login/password");
@@ -207,8 +229,8 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
                 socketThread.close();
                 break;
             case Library.TYPE_BROADCAST:
+                writeMsgToLogFile(arr[3], arr[2]);
                 putLog(DATE_FORMAT.format(Long.parseLong(arr[1])) + ": " + arr[2] + ": " + arr[3] + "\n");
-                wrtMsgToLogFile(arr[3], arr[2]);
                 break;
             case Library.USER_LIST:
                 String users = msg.substring(Library.USER_LIST.length() + Library.DELIMITER.length());
